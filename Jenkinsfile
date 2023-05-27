@@ -1,30 +1,30 @@
 pipeline {
-
-  environment {
-    dockerimagename = "sarika21/search"
-    dockerImage = ""
-  }
-
-  agent any
-
-  stages {
-
-    stage('Checkout Source') {
+	agent none  
+	stages {
+  	stage('Maven Install') {
+    	agent {
+      	docker {
+        	image 'maven:3.5.0'
+        }
+      }
       steps {
-        git 'https://tools.publicis.sapient.com/bitbucket/scm/tjdb/sarika-singh.git'
+      	sh 'mvn clean install'
       }
     }
-
-    stage('Build image') {
-      steps{
-        script {
-          dockerImage = docker.build dockerimagename
+    stage('Docker Build') {
+    	agent any
+      steps {
+      	sh 'docker build -t sarika21/search:latest .'
+      }
+    }
+    stage('Docker Push') {
+    	agent any
+      steps {
+      	withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]) {
+        	sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPassword}"
+          sh 'docker push sarika21/search:latest'
         }
       }
     }
-
-   
-
   }
-
 }
