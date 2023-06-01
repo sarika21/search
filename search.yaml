@@ -15,8 +15,8 @@ spec:
         app: search
     spec:
       containers:
-      - name: my-search
-        image: 211223789150.dkr.ecr.us-east-1.amazonaws.com/my-search:latest
+      - name: search
+        image: 618372882904.dkr.ecr.us-east-1.amazonaws.com/search:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 7070
