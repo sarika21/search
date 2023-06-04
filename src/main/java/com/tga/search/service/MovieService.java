@@ -29,7 +29,8 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class MovieService {
 
     @Autowired
-    private MovieRepository movieRepository;
+    private MovieRepository movieRepository;    
+   
 
     public Optional<Movie> findById(String id) {
         return movieRepository.findById(id);
