@@ -9,7 +9,7 @@ spec:
     - port: 7070
       protocol: TCP
       targetPort: 7070
-  type: NodePort
+  type: LoadBalancer
 
   selector:
     run: search
